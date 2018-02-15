@@ -3,11 +3,11 @@ class Atm:
     def __init__(self , balance , bank_name):
         self.balance = balance
         self.bank_name = bank_name
+        self.withdraw_list = []
 
     def withdraw(self, request):
-
         result = self.balance
-        string = "======================================="
+        string = "=" *35
         print ("Welcome to " + self.bank_name)
         print ("Current balance = " + str(self.balance))
         print (string)
@@ -23,8 +23,10 @@ class Atm:
             result = self.balance
 
         else:
-            self.balance = self.balance-request
+            self.withdraw_list.append(request)
+            self.balance = self.balance - request
 
+        def calculator (request):
             while request > 0:
 
                 if request >= 100:
@@ -48,6 +50,8 @@ class Atm:
                     request = 0
             print (string)
             return self.balance
-
         return result
 
+    def show_withdrawls(self):
+        for withdrawl in self.withdraw_list:
+            print("Receipt ---> " + self.bank_name + " withdraws = " + str(withdrawl))
