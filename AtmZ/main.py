@@ -54,4 +54,4 @@ class Atm:
 
     def show_withdrawls(self):
         for withdrawl in self.withdraw_list:
-            print("Receipt ---> " + self.bank_name + " withdraws = " + str(withdrawl))
+            print("Receipt ---> " + self.bank_name + " withdraw = " + str(withdrawl))
