@@ -14,3 +14,4 @@ atm2.withdraw(2000)
 
 atm1.show_withdrawls()
 atm2.show_withdrawls()
+
