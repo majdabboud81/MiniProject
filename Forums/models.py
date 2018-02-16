@@ -8,4 +8,3 @@ class Post:
         self.title = post_title
         self.content = post_content
 
-
