@@ -11,7 +11,7 @@ class Posts_Store:
     posts = []
 
     def get_all(self):
-        print (self.posts)
+        return Members_Store.posts
 
     def add(self, post):
         self.posts.append(post)
