@@ -49,9 +49,12 @@ class PostsStore:
         PostsStore.last_id += 1
 
     def get_by_id(self, id):
-        for post in PostsStore.posts:
+        all_posts = PostsStore.get_all(id)
+        result = "NOT FOUND !!!"
+        for post in all_posts:
             if post.id == id:
-                return post
+                result = post
+            return result
 
     def entity_exist(self, post):
         result = False
