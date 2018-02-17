@@ -13,8 +13,8 @@ class MembersStore:
         MembersStore.last_id += 1
 
     def get_by_id(self, id):
-        all_members = MembersStore.get_all(id)
-        result = "NOT FOUND !!! "
+        all_members = MembersStore.get_all(self)
+        result = None
         for member in all_members:
             if member.id == id: # replaced is cuz The operators is and is not test for object identity: x is y is true if and only if x and y are the same object.
                 result = member
@@ -49,8 +49,8 @@ class PostsStore:
         PostsStore.last_id += 1
 
     def get_by_id(self, id):
-        all_posts = PostsStore.get_all(id)
-        result = "NOT FOUND !!!"
+        all_posts = PostsStore.get_all(self)
+        result = None
         for post in all_posts:
             if post.id == id:
                 result = post
