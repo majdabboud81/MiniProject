@@ -54,7 +54,7 @@ class PostsStore:
         for post in all_posts:
             if post.id == id:
                 result = post
-            return result
+        return result
 
     def entity_exist(self, post):
         result = False
