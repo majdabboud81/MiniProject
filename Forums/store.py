@@ -13,9 +13,13 @@ class MembersStore:
         MembersStore.last_id += 1
 
     def get_by_id(self, id):
-        for member in MembersStore.members:
+        all_members = MembersStore.get_all(id)
+        result = "NOT FOUND !!! "
+        for member in all_members:
             if member.id == id: # replaced is cuz The operators is and is not test for object identity: x is y is true if and only if x and y are the same object.
-                return member
+                result = member
+        return result
+
 
     def entity_exist(self, member):
         result = False

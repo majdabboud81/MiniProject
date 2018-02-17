@@ -1,4 +1,4 @@
-from Forum import models , store
+import models , store
 
 #MEMBERS INSTANCES ------>>>>
 
@@ -13,7 +13,7 @@ member_store.add(member2)
 #    print (member)
 
 
-print (member_store.get_by_id(2))
+print (member_store.get_by_id(1))
 
 #print(member_store.delete(4))
 
@@ -32,7 +32,7 @@ post_store.add(post1)
 post_store.add(post2)
 post_store.add(post3)
 
-print (post_store.get_by_id(3))
+#print (post_store.get_by_id(3))
 
 #for post in post_store.get_all():
  #   print (post)
