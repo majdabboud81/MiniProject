@@ -1,3 +1,5 @@
+# MEMBERS CLASS --------------------->>>>>>
+
 class MembersStore:
     members = []
     last_id = 1
@@ -11,17 +13,14 @@ class MembersStore:
         MembersStore.last_id += 1
 
     def get_by_id(self, id):
-        all_members = self.get_all()
         for member in MembersStore.members:
-            if member.id is id:
+            if member.id == id: # replaced is cuz The operators is and is not test for object identity: x is y is true if and only if x and y are the same object.
                 return member
 
     def entity_exist(self, member):
-        all_members = self.get_all()
         result = False
-        for mem in MembersStore.members:
-            if mem is member:
-                result = True
+        if self.get_by_id(member.id) is not None:
+            result = True
         return result
 
     def delete(self, id):
@@ -29,13 +28,36 @@ class MembersStore:
         if mmb != None:
             MembersStore.members.remove(mmb)
         else:
-            return "id not found"
+            return "id not found !!!"
+
+# POSTS CLASS ------------------------------>>>>>>>
 
 class PostsStore:
     posts = []
+    last_id = 1
 
     def get_all(self):
         return PostsStore.posts
 
     def add(self, post):
+        post.id = PostsStore.last_id
         self.posts.append(post)
+        PostsStore.last_id += 1
+
+    def get_by_id(self, id):
+        for post in PostsStore.posts:
+            if post.id == id:
+                return post
+
+    def entity_exist(self, post):
+        result = False
+        if self.get_by_id(post.id) is not None:
+            return True
+        return result
+
+    def delete(self, id):
+        pst = self.get_by_id(id)
+        if pst != None:
+            PostsStore.posts.remove(pst)
+        else:
+            return "id not found !!!"
