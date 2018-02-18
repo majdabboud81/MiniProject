@@ -1,4 +1,5 @@
-# MEMBERS CLASS --------------------->>>>>>
+
+# MEMBERS FUNCS --------------------->>>>>>
 
 class MembersStore:
     members = []
@@ -13,13 +14,23 @@ class MembersStore:
         MembersStore.last_id += 1
 
     def get_by_id(self, id):
-        all_members = self.get_all()
         result = None
+        all_members = self.get_all()
         for member in all_members:
-            if member.id == id: # replaced is cuz The operators is and is not test for object identity: x is y is true if and only if x and y are the same object.
+            if id == member.id: # replaced is cuz The operators is and is not test for object identity: x is y is true if and only if x and y are the same object.
                 result = member
+                break
         return result
 
+    def update(self, member):
+        members = self.get_by_id(member.id)
+        if members != None:
+            members.name = member.name
+            members.age = member.age
+
+    def delete(self, id):
+        mmb = self.get_by_id(id)
+        MembersStore.members.remove(mmb)
 
     def entity_exist(self, member):
         result = False
@@ -27,14 +38,14 @@ class MembersStore:
             result = True
         return result
 
-    def delete(self, id):
-        mmb = self.get_by_id(id)
-        if mmb != None:
-            MembersStore.members.remove(mmb)
-        else:
-            return "id not found !!!"
-        
-        
+    def get_by_name(self, member_name):
+        all = self.get_all()
+        for memb in all:
+            if str(member_name) == str(memb.name):
+                print (memb)
+
+
+
 # POSTS CLASS ------------------------------>>>>>>>
 
 class PostsStore:
@@ -55,7 +66,14 @@ class PostsStore:
         for post in all_posts:
             if post.id == id:
                 result = post
+                break
         return result
+
+    def update(self, post):
+        posts = self.get_by_id(post.id)
+        if posts != None:
+            posts.title = post.title
+            posts.content = post.content
 
     def entity_exist(self, post):
         result = False
@@ -69,3 +87,4 @@ class PostsStore:
             PostsStore.posts.remove(pst)
         else:
             return "id not found !!!"
+
