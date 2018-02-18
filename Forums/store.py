@@ -39,10 +39,12 @@ class MembersStore:
         return result
 
     def get_by_name(self, member_name):
+        sam_name = []
         all = self.get_all()
         for memb in all:
             if str(member_name) == str(memb.name):
-                print (memb)
+                sam_name.append(memb)
+        return sam_name
 
 
 

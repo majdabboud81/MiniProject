@@ -67,6 +67,14 @@ def catch_exception_when_deleting():
         print("It should be an existence entity before deleting !")
 
 
+
+def print_same_names(member_store):
+
+    for member in member_store.get_by_name("Majd"):
+        print (member)
+
+
+
 members_instances = create_members()
 member1, member2, member3, member4 = members_instances
 
@@ -86,8 +94,7 @@ catch_exception_when_deleting()
 
 print_all_members(member_store)
 
-member_store.get_by_name("Majd")
-
+print_same_names(member_store)
 
 
 # POST STORE ------------------>>>>>>>
@@ -155,7 +162,6 @@ def catch_exception_when_deleting():
         post_store.delete(5)
     except ValueError:
         print("It should be an existence entity before deleting !")
-
 
 posts_instances = create_posts()
 post1, post2, post3 = posts_instances
