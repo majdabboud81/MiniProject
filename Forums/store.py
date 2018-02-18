@@ -23,10 +23,12 @@ class MembersStore:
         return result
 
     def update(self, member):
-        members = self.get_by_id(member.id)
-        if members != None:
-            members.name = member.name
-            members.age = member.age
+        result = member
+        all_members = self.get_all()
+        for index, current_member in enumerate(all_members):
+            if current_member.id == member.id:
+                all_members[index] = member
+        return result
 
     def delete(self, id):
         mmb = self.get_by_id(id)
@@ -39,12 +41,10 @@ class MembersStore:
         return result
 
     def get_by_name(self, member_name):
-        sam_name = []
         all = self.get_all()
         for memb in all:
             if str(member_name) == str(memb.name):
-                sam_name.append(memb)
-        return sam_name
+                yield (memb)
 
 
 
