@@ -30,6 +30,7 @@ class MembersStore:
                 all_members[index] = member
         return result
 
+
     def delete(self, id):
         mmb = self.get_by_id(id)
         MembersStore.members.remove(mmb)
@@ -40,11 +41,33 @@ class MembersStore:
             result = True
         return result
 
+    #def get_by_name(self, member_name):
+     #   all = self.get_all()
+      #  for memb in all:
+       #     if str(member_name) == str(memb.name):
+        #        yield memb
+
+    #def get_by_name(self, member_name):
+        #return [member for member in self.get_all() if member.name == member_name]
+
     def get_by_name(self, member_name):
-        all = self.get_all()
-        for memb in all:
-            if str(member_name) == str(memb.name):
-                yield (memb)
+        return [member for member in self.get_all() if member.name == member_name]
+
+
+    def get_members_with_posts(self, all_posts):
+       all_members = self.get_all()
+       for member in all_members:
+           for post in all_posts:
+               if member.id == post.member_id:
+                   member.posts.append(post)
+       return all_members
+
+
+    def get_top_two(self, all_posts):
+        all_post = self.get_members_with_posts(all_posts)
+        all_members = self.get_all()
+        all_post = sorted(all_members, key=lambda x: len(x.posts), reverse=True)
+        return all_post[:2]
 
 
 
@@ -85,8 +108,5 @@ class PostsStore:
 
     def delete(self, id):
         pst = self.get_by_id(id)
-        if pst != None:
-            PostsStore.posts.remove(pst)
-        else:
-            return "id not found !!!"
+        PostsStore.posts.remove(pst)
 

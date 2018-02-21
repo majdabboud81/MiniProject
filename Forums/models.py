@@ -1,3 +1,4 @@
+
 # Members Class --------------->>>>>>
 
 class Members:
@@ -5,22 +6,20 @@ class Members:
         self.id = 0
         self.name = member_name
         self.age = member_age
+        self.posts = []
 
     def __str__(self):
-        return """Name: {}
-Age: {}""".format(self.name,
-                    self.age,)
+        return f"Name: {self.name}, Age: {self.age}"
 
 
 # Posts Class --------------->>>>>>
 
 class Post:
-    def __init__(self,post_title,post_content):
+    def __init__(self,post_title,post_content, member_id=0):
         self.id = 0
         self.title = post_title
         self.content = post_content
+        self.member_id = member_id
 
     def __str__(self):
-        return """Title: {}
-Content: {}""".format(self.title,
-                    self.content,)
+        return f"Title: {self.title}, Content: {self.content}"
