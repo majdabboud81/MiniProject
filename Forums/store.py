@@ -1,6 +1,5 @@
 from operator import itemgetter
 import itertools
-import copy
 
 # MEMBERS FUNCS --------------------->>>>>>
 
