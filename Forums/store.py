@@ -1,5 +1,4 @@
-from operator import itemgetter
-import itertools
+import itertools, copy
 
 # MEMBERS FUNCS --------------------->>>>>>
 
@@ -64,14 +63,15 @@ class MembersStore:
 
 
     def get_members_with_posts(self, all_posts):
-        all_members = self.get_all()
+        all_members = copy.deepcopy(self.get_all())#we added deep copy to make copy from the member's list to not edit the original list
 
-        for (member), (post) in itertools.product(all_members, all_posts):
+        for member, post in itertools.product(all_members, all_posts):
             if member.id == post.member_id:
                 member.posts.append(post)
                 
         for member in all_members:
             yield member
+
 
     def get_top_two(self, all_posts):
         all_members_posts = self.get_members_with_posts(all_posts)
