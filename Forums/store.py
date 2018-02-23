@@ -1,54 +1,28 @@
+import models
+from operator import attrgetter
 import itertools, copy
+
 
 # MEMBERS FUNCS --------------------->>>>>>
 
-class MembersStore:
+class MembersStore(models.BaseStore):
     members = []
     last_id = 1
 
-    def get_all(self):
-        return MembersStore.members
+    def __init__(self):
+        super().__init__(MembersStore.members, MembersStore.last_id)
 
-    def add(self, member):
-        member.id = MembersStore.last_id
-        self.members.append(member)
-        MembersStore.last_id += 1
 
-    def get_by_id(self, id):
-        result = None
-        all_members = self.get_all()
-        for member in all_members:
-            if id == member.id:  # replaced is cuz The operators is and is not test for object identity: x is y is true if and only if x and y are the same object.
-                result = member
-                break
-        return result
+    #get_by_name STARTS... many generators or comprehension
 
-    def update(self, member):
-        result = member
-        all_members = self.get_all()
-        for index, current_member in enumerate(all_members):
-            if current_member.id == member.id:
-                all_members[index] = member
-        return result
+    def get_by_name(self, member_name):
+        return (member for member in self.get_all() if member.name == member_name)
 
-    def delete(self, id):
-        mmb = self.get_by_id(id)
-        MembersStore.members.remove(mmb)
-
-    def entity_exist(self, member):
-        result = False
-        if self.get_by_id(member.id) is not None:
-            result = True
-        return result
-
-    # def get_by_name(self, member_name):
+    # (((def get_by_name(self, member_name):
     #   all = self.get_all()
     #  for memb in all:
     #     if str(member_name) == str(memb.name):
     #        yield memb
-
-    def get_by_name(self, member_name):
-        return (member for member in self.get_all() if member.name == member_name)
 
     # def get_by_name(self, member_name):
     #   return [member for member in self.get_all() if member.name == member_name]
@@ -59,62 +33,41 @@ class MembersStore:
     #    for post in all_posts:
     #       if member.id == post.member_id:
     #           member.posts.append(post)
-    # return all_members
+    # return all_members)))
+    # get_by_name ENDZ ...........
 
 
     def get_members_with_posts(self, all_posts):
-        all_members = copy.deepcopy(self.get_all())#we added deep copy to make copy from the member's list to not edit the original list
+        all_members = copy.deepcopy(self.get_all())
 
         for member, post in itertools.product(all_members, all_posts):
             if member.id == post.member_id:
                 member.posts.append(post)
-                
+
         for member in all_members:
             yield member
 
-
     def get_top_two(self, all_posts):
-        all_members_posts = self.get_members_with_posts(all_posts)
-        all_members_posts = sorted(all_members_posts, key=lambda x: len(x.posts), reverse=True)
-        return all_members_posts[:2]
+        all_members_posts = list(self.get_members_with_posts(all_posts))
+        all_members_posts.sort(key=lambda x: len(x.posts), reverse=True)
+
+        yield all_members_posts[0]
+        yield all_members_posts[1]
 
 
 
 # POSTS CLASS ------------------------------>>>>>>>
 
-class PostsStore:
+
+class PostsStore(models.BaseStore):
     posts = []
     last_id = 1
 
-    def get_all(self):
-        return PostsStore.posts
+    def __init__(self):
+        super().__init__(PostsStore.posts, PostsStore.last_id)
 
-    def add(self, post):
-        post.id = PostsStore.last_id
-        self.posts.append(post)
-        PostsStore.last_id += 1
+    def get_posts_by_date(self, all_posts):
+        all_posts.sort(key=attrgetter('date'), reverse=True)
 
-    def get_by_id(self, id):
-        all_posts = self.get_all()
-        result = None
         for post in all_posts:
-            if post.id == id:
-                result = post
-                break
-        return result
-
-    def update(self, post):
-        posts = self.get_by_id(post.id)
-        if posts != None:
-            posts.title = post.title
-            posts.content = post.content
-
-    def entity_exist(self, post):
-        result = False
-        if self.get_by_id(post.id) is not None:
-            return True
-        return result
-
-    def delete(self, id):
-        pst = self.get_by_id(id)
-        PostsStore.posts.remove(pst)
+            yield post

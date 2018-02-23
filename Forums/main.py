@@ -1,4 +1,5 @@
 import models, store
+from time import sleep
 
 # MEMBERS STORE ------>>>>
 
@@ -72,17 +73,22 @@ def catch_exception_when_deleting():
 
 
 def create_posts(members_instances):
-
     post1 = models.Post("Agriculture", "Agriculture is amazing", members_instances[0].id)
+    sleep(1)
     post2 = models.Post("Engineering", "I love engineering", members_instances[0].id)
+    sleep(1)
 
     post3 = models.Post("Medicine", "Medicine is great", members_instances[1].id)
+    sleep(1)
     post4 = models.Post("Architecture", "Spectacular art", members_instances[1].id)
     post5 = models.Post("Astronomy", "Space is awesome", members_instances[1].id)
 
     post6 = models.Post("Geology", "Earth is our friend", members_instances[2].id)
+    sleep(1)
     post7 = models.Post("ComputerSci", "Our passion", members_instances[2].id)
+    sleep(1)
     post8 = models.Post("Algorithms", "Yeah, more of that", members_instances[2].id)
+    sleep(1)
     post9 = models.Post("Operating Systems", "Ewww", members_instances[2].id)
 
     print(post1)
@@ -115,6 +121,16 @@ def store_should_get_top_two(member_store, post_store):
         print(f"{member_with_posts} has posts:")
         for post in member_with_posts.posts:
             print(f"\t{post}")
+
+
+def print_by_date(post_store):
+    print("=" * 30)
+
+    for post in post_store.get_posts_by_date(post_store.get_all()):
+        print(post)
+
+    print("=" * 30)
+
 
 members_instances = create_members()
 member1, member2, member3, member4 = members_instances
@@ -149,7 +165,7 @@ store_should_get_members_with_posts(member_store, post_store)
 
 store_should_get_top_two(member_store, post_store)
 
-
+print_by_date(post_store)
 
 # POST STORE ------------------>>>>>>>
 
@@ -202,13 +218,6 @@ def catch_exception_when_deleting():
         print("It should be an existence entity before deleting !")
 
 
-posts_instances = create_posts(members_instances)
-post1, post2, post3, post4, post5, post6, post7, post8, post9 = posts_instances
-
-post_store = store.PostsStore()
-
-store_should_add_models(posts_instances, post_store)
-
 stores_should_be_similar()
 
 print_all_posts(post_store)
@@ -220,6 +229,4 @@ update_should_modify_object(post_store, post3)
 catch_exception_when_deleting()
 
 print_all_posts(post_store)
-
-
 """
