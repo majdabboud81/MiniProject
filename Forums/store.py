@@ -3,9 +3,54 @@ from operator import attrgetter
 import itertools, copy
 
 
+class BaseStore():
+
+    def __init__(self, data_provider, last_id):
+        self._data_provider = data_provider
+        self._last_id = last_id
+
+    def get_all(self):
+        return self._data_provider
+
+    def add(self, item_instance):
+        item_instance.id = self._last_id
+        self._data_provider.append(item_instance)
+        self._last_id += 1
+
+    def get_by_id(self, id):
+        result = None
+        all_items_instance = self.get_all()
+        for item_instance in all_items_instance:
+            if id == item_instance.id:  # replaced is cuz The operators is and is not test for object identity: x is y is true if and only if x and y are the same object.
+                result = item_instance
+                break
+        return result
+
+
+    def update(self, item_instance):
+        result = item_instance
+        all_items_instance = self.get_all()
+        for index, current_item_instance in enumerate(all_items_instance):
+            if current_item_instance.id == item_instance.id:
+                all_items_instance[index] = item_instance
+        return result
+
+
+    def delete(self, id):
+        item_instance = self.get_by_id(id)
+        self._data_provider.remove(item_instance)
+
+
+    def entity_exist(self, item_instance):
+        result = False
+        if self.get_by_id(item_instance.id) is not None:
+            result = True
+        return result
+
+
 # MEMBERS FUNCS --------------------->>>>>>
 
-class MembersStore(models.BaseStore):
+class MembersStore(BaseStore):
     members = []
     last_id = 1
 
@@ -59,7 +104,7 @@ class MembersStore(models.BaseStore):
 # POSTS CLASS ------------------------------>>>>>>>
 
 
-class PostsStore(models.BaseStore):
+class PostsStore(BaseStore):
     posts = []
     last_id = 1
 
@@ -67,7 +112,7 @@ class PostsStore(models.BaseStore):
         super().__init__(PostsStore.posts, PostsStore.last_id)
 
     def get_posts_by_date(self, all_posts):
-        all_posts.sort(key=attrgetter('date'), reverse=True)
+        all_posts.sort(key=lambda x: x.date, reverse=True)
 
         for post in all_posts:
             yield post
