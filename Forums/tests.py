@@ -1,8 +1,20 @@
-import models, store
+from Forums import models, store
 from time import sleep
+from flask import Flask, render_template
+
+app = Flask(__name__)
+@app.route("/")
+@app.route("/index")
+def home():
+    return render_template("index.html")
+
+app.run()
 
 # MEMBERS STORE ------>>>>
 
+
+
+"""
 def create_members():
 
     member1 = models.Members("Majd", 36)
@@ -74,21 +86,15 @@ def catch_exception_when_deleting():
 
 def create_posts(members_instances):
     post1 = models.Post("Agriculture", "Agriculture is amazing", members_instances[0].id)
-    sleep(1)
     post2 = models.Post("Engineering", "I love engineering", members_instances[0].id)
-    sleep(1)
 
     post3 = models.Post("Medicine", "Medicine is great", members_instances[1].id)
-    sleep(1)
     post4 = models.Post("Architecture", "Spectacular art", members_instances[1].id)
     post5 = models.Post("Astronomy", "Space is awesome", members_instances[1].id)
 
     post6 = models.Post("Geology", "Earth is our friend", members_instances[2].id)
-    sleep(1)
     post7 = models.Post("ComputerSci", "Our passion", members_instances[2].id)
-    sleep(1)
     post8 = models.Post("Algorithms", "Yeah, more of that", members_instances[2].id)
-    sleep(1)
     post9 = models.Post("Operating Systems", "Ewww", members_instances[2].id)
 
     print(post1)
@@ -170,7 +176,7 @@ print_by_date(post_store)
 # POST STORE ------------------>>>>>>>
 
 
-"""
+
 def store_should_add_models(posts_instances, post_store):
     for post in posts_instances:
         post_store.add(post)
