@@ -1,21 +1,11 @@
 from Forums import models, store
 from time import sleep
-from flask import Flask, render_template
-
-app = Flask(__name__)
-
-@app.route("/")
-@app.route("/index")
-def home():
-    return render_template("index.html")
-
-app.run()
 
 # MEMBERS STORE ------>>>>
 
 
 
-"""
+
 def create_members():
 
     member1 = models.Members("Majd", 36)
@@ -177,7 +167,7 @@ print_by_date(post_store)
 # POST STORE ------------------>>>>>>>
 
 
-
+"""
 def store_should_add_models(posts_instances, post_store):
     for post in posts_instances:
         post_store.add(post)
