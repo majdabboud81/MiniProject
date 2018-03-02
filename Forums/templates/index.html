@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>One million arab coders</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css') }}"/>
 </head>
 <body>
     <div id="container">
@@ -19,7 +19,7 @@
         </nav>
     </div>
     <div class="content">
-        <h2> POSTS <a href="#" style="padding-left: 200px">Create Post</a></h2>
+        <h2> POSTS <a href="topic_add" style="padding-left: 200px">Create Post</a></h2>
         <table id="body-content">
             <tbody style="padding-buttom: 20px;">
         {% for post in posts %}
