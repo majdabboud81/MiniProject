@@ -17,6 +17,3 @@ def topic_add():
         return redirect(url_for("home"))
     else:
         return render_template("topic_add.html")
-
-
-app.run()
